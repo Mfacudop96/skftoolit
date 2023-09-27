@@ -1,6 +1,7 @@
 import base64
 import warnings
 import streamlit as st
+import streamlit_config
 import plotly.express as px
 import pandas as pd
 from IPython.display import display, HTML
@@ -11,6 +12,9 @@ from pydrive.drive import GoogleDrive
 from gspread_dataframe import set_with_dataframe
 from google.oauth2.service_account import Credentials
 from oauth2client.service_account import ServiceAccountCredentials
+
+# Set the page configuration
+streamlit_config.set_page_config(hide_streamlit_sharing=True)
 
 warnings.filterwarnings('ignore')
 st.set_option('deprecation.showPyplotGlobalUse', False)
