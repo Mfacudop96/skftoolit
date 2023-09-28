@@ -71,6 +71,7 @@ background: rgba(0,0,0,0);
 }}
 
 [data-testid="stToolbar"] {{
+visibility: hidden;
 right: 2rem;
 }}
 
@@ -136,13 +137,11 @@ with st.sidebar:
 
         vol_oil_input = st.number_input(
             "Volumen de Aceite (Lt)", 
-            value=None, 
-            placeholder="Ingrese volumen...")
+            value=0)
 
         tem_oil_input = st.number_input(
             "Temperatura de Aceite (C°)", 
-            value=None, 
-            placeholder="Ingrese temperatura...")
+            value=0)
 
         viscocidad = data.keys()
         volumen = index_tool
