@@ -134,17 +134,27 @@ with st.sidebar:
             placeholder="Nombre del Acite"
         )
 
+        vol_oil_input = st.number_input(
+            "Volumen de Aceite (Lt)", 
+            value=None, 
+            placeholder="Ingrese volumen...")
+
+        tem_oil_input = st.number_input(
+            "Temperatura de Aceite (C°)", 
+            value=None, 
+            placeholder="Ingrese temperatura...")
+
         viscocidad = data.keys()
         volumen = index_tool
 
         #vol_oil_input  = st.number_input("Volumen de Aceite (Lt)")
-        vol_oil_input = st.selectbox("Volumen de Aceite (Lt)",
-                                     list(volumen),
-                                     index=0,
-                                     placeholder="Select contact method...",
-                                     label_visibility=st.session_state.visibility,
-                                     disabled=st.session_state.disabled
-                                    )
+        rang_vol_oil_input = st.selectbox("Rango de volumen de Aceite (Lt)",
+                                          list(volumen),
+                                          index=0,
+                                          placeholder="Select contact method...",
+                                          label_visibility=st.session_state.visibility,
+                                          disabled=st.session_state.disabled
+                                         )
 
 
         #LTc_oil_input = st.number_input("Viscosidad del Aceite (ISO VG)")
@@ -163,7 +173,7 @@ with st.sidebar:
 
 
     if button2:
-        cod_robx_input = ref_df[visc_oil_input].loc[vol_oil_input]
+        cod_robx_input = ref_df[visc_oil_input].loc[rang_vol_oil_input]
         st.write(f"Código ROBX es **{cod_robx_input}**")
 
     if button1:
@@ -187,7 +197,9 @@ with st.sidebar:
                     'SECTOR': sector_name_input, 
                     'TIPO_ACTIVO': tip_act_input, 
                     'ACEITE': oil_name_input, 
-                    'VOLUMEN_ACEITE': vol_oil_input, 
+                    'VOLUMEN_ACEITE': vol_oil_input,
+                    'TEMPERATURA_ACEITE': vol_oil_input,
+                    'RANGO_VOLUMEN_ACEITE': rang_vol_oil_input, 
                     'VISCOCIDAD_ACEITE': visc_oil_input,
                     'ROBX_COD': cod_robx_input}
         
