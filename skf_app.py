@@ -190,7 +190,7 @@ with st.sidebar:
         # select a work sheet from its name
         worksheet = gs.worksheet('Sheet1')
 
-        cod_robx_input = ref_df[visc_oil_input].loc[vol_oil_input]
+        cod_robx_input = ref_df[visc_oil_input].loc[rang_vol_oil_input]
         new_data = {'DISTRIBUIDOR_NOMBRE': dist_name_input, 
                     'CLIENTE_NOMBRE': clien_name_input, 
                     'SECTOR': sector_name_input, 
