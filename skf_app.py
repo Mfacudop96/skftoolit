@@ -197,7 +197,7 @@ with st.sidebar:
                     'TIPO_ACTIVO': tip_act_input, 
                     'ACEITE': oil_name_input, 
                     'VOLUMEN_ACEITE': vol_oil_input,
-                    'TEMPERATURA_ACEITE': vol_oil_input,
+                    'TEMPERATURA_ACEITE': tem_oil_input,
                     'RANGO_VOLUMEN_ACEITE': rang_vol_oil_input, 
                     'VISCOCIDAD_ACEITE': visc_oil_input,
                     'ROBX_COD': cod_robx_input}
