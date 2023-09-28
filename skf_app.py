@@ -79,6 +79,8 @@ right: 2rem;
                 color: red;
                 top: 0;
             }}
+
+footer{{visibility: hidden;}}
 </style>
 """
 
