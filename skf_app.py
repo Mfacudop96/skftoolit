@@ -103,7 +103,7 @@ with st.sidebar:
     with st.form("my_form"):
 
         dist_name_input = st.text_input(
-            "Nombre de Distribuidor",
+            "Nombre de Distribuidor *",
             label_visibility=st.session_state.visibility,
             disabled=st.session_state.disabled,
             placeholder="Nombre Completo"
@@ -131,26 +131,26 @@ with st.sidebar:
         )
 
         oil_name_input = st.text_input(
-            "Nombre del Aceite",
+            "Nombre del Aceite *",
             label_visibility=st.session_state.visibility,
             disabled=st.session_state.disabled,
             placeholder="Nombre del Acite"
         )
 
         vol_oil_input = st.number_input(
-            "Volumen de Aceite (Lt)", 
+            "Volumen de Aceite (Lt) *", 
             value=0)
 
         tem_oil_input = st.number_input(
-            "Temperatura de Aceite (C°)", 
+            "Temperatura de Aceite (C°) *", 
             value=0)
 
         viscocidad = data.keys()
         volumen = index_tool
 
         #vol_oil_input  = st.number_input("Volumen de Aceite (Lt)")
-        rang_vol_oil_input = st.selectbox("Rango de volumen de Aceite (Lt)",
-                                          list(volumen),
+        rang_vol_oil_input = st.selectbox("Rango de volumen de Aceite (Lt) *",
+                                          ['Seleccionar'] + list(volumen),
                                           index=0,
                                           placeholder="Select contact method...",
                                           label_visibility=st.session_state.visibility,
@@ -159,8 +159,8 @@ with st.sidebar:
 
 
         #LTc_oil_input = st.number_input("Viscosidad del Aceite (ISO VG)")
-        visc_oil_input = st.selectbox("Viscosidad del Aceite (ISO VG)",
-                                      list(viscocidad),
+        visc_oil_input = st.selectbox("Viscosidad del Aceite (ISO VG) *",
+                                      ['Seleccionar'] + list(viscocidad),
                                       index=0,
                                       placeholder="Select contact method...",
                                       label_visibility=st.session_state.visibility,
@@ -169,13 +169,17 @@ with st.sidebar:
         
         col1, col2, col3 = st.columns(3)
 
-        button1 = col1.form_submit_button("Save", type="primary", use_container_width=True)
-        button2 = col3.form_submit_button("Compute", type="primary", use_container_width=True)
+        button1 = col1.form_submit_button("Guardar", type="primary", use_container_width=True)
+        button2 = col3.form_submit_button("Calcular", type="primary", use_container_width=True)
 
 
     if button2:
-        cod_robx_input = ref_df[visc_oil_input].loc[rang_vol_oil_input]
-        st.write(f"Código ROBX es **{cod_robx_input}**")
+
+        if (dist_name_input == '') | (oil_name_input == '') | (vol_oil_input <= 0) | (tem_oil_input <= 0) | (rang_vol_oil_input == 'Seleccionar') | (visc_oil_input == 'Seleccionar'):
+            st.write("Completar los campos obligatorios")
+        else:
+            cod_robx_input = ref_df[visc_oil_input].loc[rang_vol_oil_input]
+            st.write(f"Código ROBX es **{cod_robx_input}**")
 
     if button1:
 
@@ -192,25 +196,28 @@ with st.sidebar:
         # select a work sheet from its name
         worksheet = gs.worksheet('Sheet1')
 
-        cod_robx_input = ref_df[visc_oil_input].loc[rang_vol_oil_input]
-        new_data = {'DISTRIBUIDOR_NOMBRE': dist_name_input, 
-                    'CLIENTE_NOMBRE': clien_name_input, 
-                    'SECTOR': sector_name_input, 
-                    'TIPO_ACTIVO': tip_act_input, 
-                    'ACEITE': oil_name_input, 
-                    'VOLUMEN_ACEITE': vol_oil_input,
-                    'TEMPERATURA_ACEITE': tem_oil_input,
-                    'RANGO_VOLUMEN_ACEITE': rang_vol_oil_input, 
-                    'VISCOCIDAD_ACEITE': visc_oil_input,
-                    'ROBX_COD': cod_robx_input}
-        
-        new_df = pd.DataFrame(new_data, index=[0])
-        
-        # write to dataframe
-        df_values = new_df.values.tolist()
-        gs.values_append('Sheet1', {'valueInputOption': 'RAW'}, {'values': df_values})
+        if (dist_name_input == '') | (oil_name_input == '') | (vol_oil_input == 0) | (tem_oil_input == 0) | (rang_vol_oil_input == 'Seleccionar') | (visc_oil_input == 'Seleccionar'):
+            st.write("Completar los campos obligatorios")
+        else:
+            cod_robx_input = ref_df[visc_oil_input].loc[rang_vol_oil_input]
+            new_data = {'DISTRIBUIDOR_NOMBRE': dist_name_input, 
+                        'CLIENTE_NOMBRE': clien_name_input, 
+                        'SECTOR': sector_name_input, 
+                        'TIPO_ACTIVO': tip_act_input, 
+                        'ACEITE': oil_name_input, 
+                        'VOLUMEN_ACEITE': vol_oil_input,
+                        'TEMPERATURA_ACEITE': tem_oil_input,
+                        'RANGO_VOLUMEN_ACEITE': rang_vol_oil_input, 
+                        'VISCOCIDAD_ACEITE': visc_oil_input,
+                        'ROBX_COD': cod_robx_input}
+            
+            new_df = pd.DataFrame(new_data, index=[0])
+            
+            # write to dataframe
+            df_values = new_df.values.tolist()
+            gs.values_append('Sheet1', {'valueInputOption': 'RAW'}, {'values': df_values})
 
-        st.write("Se guardo los datos exitosamente")
+            st.write("Se guardo los datos exitosamente")
     
 
 
